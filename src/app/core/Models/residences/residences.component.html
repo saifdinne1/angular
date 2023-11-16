@@ -1,0 +1,30 @@
+<div class="card" style="width: 18rem" *ngFor="let residence of listResidences">
+  <img
+    [src]="residence.image"
+    alt="{{ residence.name }}"
+    width="200"
+    height="150"
+  />
+  <div class="card-body">
+    <h5 class="card-title">{{ residence.name }}</h5>
+    <p class="card-text">
+      {{ residence.address }}
+    </p>
+    <a class="btn btn-primary" (click)="showApartments(residence)"
+      >Show Apartments</a
+    >
+    <div *ngFor="let apartment of selectedResidenceApartments">
+      <h4>{{ apartment.description }}</h4>
+      <p>{{ apartment.category }}</p>
+      <p>{{ apartment.surface }} m²</p>
+      <button (click)="addToFavorites(apartment)">Like</button>
+    </div>
+    <input
+      type="number"
+      [(ngModel)]="surfaceFilter"
+      placeholder="Filter by surface"
+    />
+    <button (click)="filterBySurface()">Filter</button>
+  </div>
+</div>
+
