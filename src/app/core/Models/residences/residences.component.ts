@@ -50,26 +50,40 @@ export class ResidencesComponent {
     },
   ];
 
-  selectedResidenceApartments: Apartment[] = [];
-  favoriteApartments: Apartment[] = [];
+  selectedR_A: Apartment[] = [];
+  favoriteA: Apartment[] = [];
   surfaceFilter: number | null = null;
+  selectedR: Residence | null = null;
+  noA: boolean = false;
+  searchSurface: number | null = null;
+  filteredA: Apartment[] = [];
 
   showApartments(residence: Residence): void {
-    this.selectedResidenceApartments = this.listApartments.filter(
+    this.selectedR = residence;
+    this.selectedR_A = this.listApartments.filter(
       (apartment) => apartment.residence === residence
     );
+    this.filteredA = this.selectedR_A;
+    this.noA = this.selectedR_A.length === 0;
   }
 
   addToFavorites(apartment: Apartment): void {
-    this.favoriteApartments.push(apartment);
+    const isAlreadyInFavorites = this.favoriteA.some(
+      (favApartment) => favApartment.id === apartment.id
+    );
+
+    if (!isAlreadyInFavorites) {
+      this.favoriteA.push(apartment);
+    }
   }
 
-  filterBySurface(): void {
-    if (this.surfaceFilter !== null) {
-      this.selectedResidenceApartments =
-        this.selectedResidenceApartments.filter(
-          (apartment) => apartment.surface >= this.surfaceFilter!
-        );
+  filterA(): void {
+    if (this.searchSurface !== null) {
+      this.filteredA = this.selectedR_A.filter(
+        (apartment) => apartment.surface === this.searchSurface
+      );
+    } else {
+      this.filteredA = this.selectedR_A;
     }
   }
 }
